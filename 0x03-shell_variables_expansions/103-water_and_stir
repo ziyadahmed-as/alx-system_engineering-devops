@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "$WATER" | tr 'ewatr' '01234' | {
+  read w
+  echo "$STIR" | tr 'itir' '0123' | {
+    read s
+    sum=$((w + s))
+    echo "$sum" | tr '0123456789' 'bestcholhc'
+  }
+}

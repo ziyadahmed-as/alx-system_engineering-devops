@@ -1,0 +1,58 @@
+## 1-distributed_web_infrastructure — Solution
+### Scenario
+A user opens their browser and types www.foobar.com. The request reaches a load balancer, which distributes traffic across multiple web servers hosting the application. The application servers retrieve or store necessary data using a backend database cluster.
+
+### Infrastructure Overview
+This setup includes a distributed web infrastructure with the following components:
+
+### Servers
+Physical or virtual machines to host application services.
+
+1 Load Balancer (HAProxy)
+Distributes incoming traffic to application servers for better reliability and performance.
+
+1 Web Server (Nginx)
+Handles static content (HTML, CSS, JS) and reverse-proxies dynamic requests.
+
+1 Application Server
+Runs the core backend logic (e.g., PHP, Python, Node.js).
+
+1 Set of Application Files
+Shared or duplicated codebase deployed on all application servers.
+
+1 Database (MySQL) — Primary-Replica setup
+A primary node for writing and replica nodes for read scalability.
+### Purpose of Additional Elements
+Component	Reason for Addition
+Load Balancer	Distributes traffic across servers to ensure high availability and performance.
+2 Servers	Supports redundancy and load balancing; avoids single point of failure (SPOF).
+Database Cluster	Ensures high availability and scalability of the data layer.
+
+### Load Balancer Details
+Tool Used: HAProxy
+
+Distribution Algorithm: Round Robin
+Evenly distributes requests in a rotating sequence to each backend server.
+For example, request 1 goes to server A, request 2 to server B, and so on.
+
+### Active-Active vs Active-Passive
+Active-Active (used here):
+
+All servers actively handle traffic simultaneously.
+
+Increases availability and performance.
+
+Active-Passive:
+
+One active server handles traffic; the passive one stays idle until the active fails.
+
+Good for fault tolerance but wastes resources.
+This setup is Active-Active, since both servers process requests concurrently behind the load balancer.
+
+### Database: Primary-Replica Cluster
+Primary Node (Master):
+Handles all write operations (INSERT, UPDATE, DELETE).
+
+Replica Node (Slave):
+Handles read-only operations (SELECT).
+Keeps a near real-time copy of the primary data using replication.

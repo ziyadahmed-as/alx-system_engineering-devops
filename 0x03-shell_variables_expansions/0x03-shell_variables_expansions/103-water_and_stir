@@ -1,0 +1,23 @@
+#!/bin/bash
+# Convert WATER from custom base to base-10
+w=$(echo "$WATER" | tr 'ewatr' '01234')
+
+# Convert STIR from custom base to base-10
+s=$(echo "$STIR" | tr 'tir.' '0123')
+
+# Add both numbers
+sum=$((w + s))
+
+# Convert base-10 sum to base-bestcholhc (custom base-10)
+digits="bestcholhc"
+result=""
+while [ "$sum" -gt 0 ]; do
+    digit=$((sum % 10))
+    result="${digits:$digit:1}$result"
+    sum=$((sum / 10))
+done
+
+# If result is empty (sum was 0), show the first character
+[ -z "$result" ] && result="${digits:0:1}"
+
+echo "$result"

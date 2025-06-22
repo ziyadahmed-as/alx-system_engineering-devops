@@ -1,0 +1,50 @@
+## Simple Web Stack — Solution
+### Scenario:
+A user opens their web browser and enters www.foobar.com into the address bar. The browser initiates a request to access the website hosted on a server that has been configured using a simple web stack.
+
+### Infrastructure Design
+This infrastructure is composed of:
+
+1 Server
+A single virtual or physical machine that hosts all components: web server, application server, application files, and database.
+
+1 Web Server (Nginx)
+Handles HTTP requests, serves static content (HTML, CSS, JS), and acts as a reverse proxy to forward dynamic requests to the application server.
+
+1 Application Server
+Executes the application logic written in a server-side language (e.g., PHP, Python, or Node.js).
+
+1 Application Codebase
+Contains the website source code (e.g., dynamic content generation, routing, business logic).
+
+1 Database (MySQL)
+Stores and manages the website’s data, including user information, product listings, and any other structured content.
+
+1 Domain Name: foobar.com
+A domain name configured with a www record (A record) that points to the IP address 8.8.8.8, where the server is hosted.
+### Component Explanations
+What is a Server?
+A server is a powerful computer designed to provide services or resources to other computers (clients) over a network. In web infrastructure, it hosts websites and responds to client (user) requests.
+
+What is the Role of the Domain Name?
+The domain name (foobar.com) serves as a human-readable address that maps to the server’s IP address, making it easier for users to access the website without remembering numeric IPs.
+
+What Type of DNS Record is www in www.foobar.com?
+The www in www.foobar.com is a DNS A (Address) Record, which maps the www subdomain to the IP address 8.8.8.8.
+
+What is the Role of the Web Server (Nginx)?
+
+Listens for incoming HTTP(S) requests.
+
+Serves static files like HTML, CSS, images.
+
+Forwards dynamic requests to the application server using reverse proxy configuration.
+
+What is the Role of the Application Server?
+The application server processes dynamic requests by executing backend code, handling user sessions, and interacting with the database to fetch or store information.
+
+What is the Role of the Database?
+The database (MySQL) stores all persistent data required by the application. It allows for data retrieval, manipulation, and storage using structured queries (SQL).
+
+What Does the Server Use to Communicate with the User's Computer?
+The server uses the HTTP/HTTPS protocol to communicate with the client (user's browser), transferring data over TCP/IP networks.

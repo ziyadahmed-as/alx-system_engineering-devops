@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# SSH into the server using only single-character flags and the private key ~/.ssh/school
+ssh -i ~/.ssh/school ubuntu@8.8.8.8

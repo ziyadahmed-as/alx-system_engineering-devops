@@ -1,4 +1,2 @@
 #!/bin/bash
-
-# SSH into the remote server using the private key and disable password authentication
- ssh -i ~/.ssh/school -o PasswordAuthentication=no ubuntu@8.8.8.8
+ssh -i ~/.ssh/school -o PasswordAuthentication=no ubuntu@54.123.45.67

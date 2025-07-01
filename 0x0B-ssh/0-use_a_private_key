@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# SSH into the server using only single-character flags and the private key ~/.ssh/school
-ssh -i ~/.ssh/school ubuntu@8.8.8.8
+# SSH into the remote server using the private key and disable password authentication
+ ssh -i ~/.ssh/school -o PasswordAuthentication=no ubuntu@8.8.8.8

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Bash script to install and configure HAProxy with roundrobin load balancing
+
+# shellcheck disable=SC2154
+
+# Install HAProxy
+apt-get update -y
+apt-get install -y haproxy
+
+# Enable HAProxy to start on boot
+sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
+
+# Replace these IPs with the actual private/public IPs of your web servers
+WEB01_IP="192.168.56.101"
+WEB02_IP="192.168.56.102"
+
+# Configure HAProxy
+cat <<EOF > /etc/haproxy/haproxy.cfg
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    daemon
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance roundrobin
+    server web01 $WEB01_IP:80 check
+    server web02 $WEB02_IP:80 check
+EOF
+
+# Restart HAProxy
+systemctl restart haproxy

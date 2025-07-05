@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Configures a new Ubuntu machine with Nginx and custom HTTP header X-Served-By
+
+# Ignore shellcheck SC2154
+# shellcheck disable=SC2154
+
+# Update packages and install Nginx
+apt-get update -y
+apt-get install -y nginx
+
+# Ensure nginx is running
+systemctl enable nginx
+systemctl start nginx
+
+# Get the hostname of the current machine
+hostname=$(hostname)
+
+# Add custom header to Nginx config
+config_file="/etc/nginx/sites-available/default"
+
+# Backup original config
+cp "$config_file" "${config_file}.bak"
+
+# Insert custom header inside the server block
+sed -i "/^\s*location \/ {/a \\tadd_header X-Served-By \"$hostname\";" "$config_file"
+
+# Reload nginx to apply changes
+systemctl reload nginx

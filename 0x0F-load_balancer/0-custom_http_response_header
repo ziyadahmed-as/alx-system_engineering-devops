@@ -1,28 +1,30 @@
 #!/usr/bin/env bash
-# Configures a new Ubuntu machine with Nginx and custom HTTP header X-Served-By
+# Script to install Nginx and add custom header X-Served-By
 
-# Ignore shellcheck SC2154
-# shellcheck disable=SC2154
-
-# Update packages and install Nginx
-apt-get update -y
+# Install Nginx if not already installed
+apt-get update
 apt-get install -y nginx
 
-# Ensure nginx is running
-systemctl enable nginx
-systemctl start nginx
-
-# Get the hostname of the current machine
+# Get the server's hostname
 hostname=$(hostname)
 
-# Add custom header to Nginx config
-config_file="/etc/nginx/sites-available/default"
+# Update the default site config to add the X-Served-By header
+cat > /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-# Backup original config
-cp "$config_file" "${config_file}.bak"
+    root /var/www/html;
+    index index.html;
 
-# Insert custom header inside the server block
-sed -i "/^\s*location \/ {/a \\tadd_header X-Served-By \"$hostname\";" "$config_file"
+    server_name _;
 
-# Reload nginx to apply changes
-systemctl reload nginx
+    location / {
+        add_header X-Served-By $hostname;
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Reload Nginx to apply changes
+systemctl restart nginx

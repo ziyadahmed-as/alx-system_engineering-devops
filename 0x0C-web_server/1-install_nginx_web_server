@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Script to install and configure nginx to serve "Hello World!" on port 80
+
+# Install nginx silently
+apt-get update -y
+apt-get install nginx -y
+
+# Create a custom index.html
+echo "Hello World!" > /var/www/html/index.html
+
+# Start nginx using service (not systemctl)
+service nginx start
+

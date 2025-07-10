@@ -1,0 +1,27 @@
+#!/bin/bash
+# Script: 0-world_wide_web
+# Purpose: Display DNS A records for subdomains of a given domain
+
+# Function to get subdomain DNS info
+get_subdomain_info() {
+    local full_domain="$1"
+    local sub="$2"
+    # Run dig and extract answer section
+    record=$(dig ${sub}.${full_domain} +short | head -n 1)
+    if [ -n "$record" ]; then
+        echo "The subdomain ${sub} is a A record and points to ${record}"
+    fi
+}
+
+# Main logic
+domain="$1"
+subdomain="$2"
+
+# If subdomain is passed
+if [ -n "$subdomain" ]; then
+    get_subdomain_info "$domain" "$subdomain"
+else
+    for sub in www lb-01 web-01 web-02; do
+        get_subdomain_info "$domain" "$sub"
+    done
+fi

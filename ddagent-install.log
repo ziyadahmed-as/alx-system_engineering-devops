@@ -1,0 +1,9 @@
+[34m
+* Datadog Agent install script v1.36.0
+[0m
+[31mYour OS or distribution are not supported by this install script.
+Please follow the instructions on the Agent setup page:
+
+https://app.datadoghq.com/account/settings/agent/latest?platform=overview[0m
+curl: (22) The requested URL returned error: 403
+Unable to send telemetry
